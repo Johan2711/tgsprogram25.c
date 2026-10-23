@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string namaBarang[5];
+    int stok[5] = {0, 0, 0, 0, 0};
+    int pilihan, rak, jumlah;
+
+    cout << "=== INPUT NAMA BARANG ===" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "Nama barang di rak " << i + 1 << " : ";
+        getline(cin, namaBarang[i]);
+    }
+
+    do {
+        cout << "\n=== MENU GUDANG ===" << endl;
+        cout << "1. Tambah stok" << endl;
+        cout << "2. Kurangi stok" << endl;
+        cout << "3. Lihat laporan (histogram)" << endl;
+        cout << "4. Keluar" << endl;
+        cout << "Pilihan: ";
+        cin >> pilihan;
+
+        if (pilihan == 1 || pilihan == 2) {
+            cout << "Pilih rak (1-5): ";
+            cin >> rak;
+
+            if (rak < 1 || rak > 5) {
+                cout << "Nomor rak tidak valid!" << endl;
+            } else {
+                cout << "Jumlah: ";
+                cin >> jumlah;
+
+                if (jumlah < 0) {
+                    cout << "Jumlah tidak boleh negatif!" << endl;
+                } else if (pilihan == 1) {
+                    stok[rak - 1] = stok[rak - 1] + jumlah;
+                    cout << "Stok " << namaBarang[rak - 1] << " sekarang: " << stok[rak - 1] << endl;
+                } else {
+                    if (jumlah > stok[rak - 1]) {
+                        cout << "Gagal! Stok tidak cukup, stok saat ini: " << stok[rak - 1] << endl;
+                    } else {
+                        stok[rak - 1] = stok[rak - 1] - jumlah;
+                        cout << "Stok " << namaBarang[rak - 1] << " sekarang: " << stok[rak - 1] << endl;
+                    }
+                }
+            }
+        } else if (pilihan == 3) {
+            cout << "\n=== LAPORAN STOK GUDANG ===" << endl;
+            for (int i = 0; i < 5; i++) {
+                cout << "Rak " << i + 1 << " (" << namaBarang[i] << ") : ";
+                for (int j = 0; j < stok[i]; j++) {
+                    cout << "*";
+                }
+                cout << " " << stok[i] << endl;
+            }
+        } else if (pilihan != 4) {
+            cout << "Pilihan tidak valid!" << endl;
+        }
+
+    } while (pilihan != 4);
+
+    cout << "Program selesai." << endl;
+    return 0;
+}
